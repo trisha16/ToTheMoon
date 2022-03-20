@@ -12,7 +12,7 @@ Poonam Metkar
 
 Nitish Lele(885897850) -nitishlele@csu.fullerton.edu
 
-Ayush bhardwaj - 
+Ayush bhardwaj (885866178) - ayush@csu.fullerton.edu
 
 **Additional Work**
 - Updated Frontend UI
