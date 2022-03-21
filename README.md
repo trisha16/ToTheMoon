@@ -8,7 +8,7 @@ By:
 
 Trisha Parikh(885965400) - trisha16@csu.fullerton.edu
 
-Poonam Metkar
+Poonam Metkar(885870899) - poonammetkar@csu.fullerton.edu
 
 Nitish Lele(885897850) -nitishlele@csu.fullerton.edu
 
