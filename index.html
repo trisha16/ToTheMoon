@@ -27,7 +27,7 @@
     }
 
     body {
-      overflow: hidden;
+      /* overflow: hidden; */
       font-family: comic-neue;
     }
 
@@ -124,7 +124,9 @@
               alt="">
             To The Moon
           </a>
-          <button data-v-0dbaae9e="" onclick="window.open(`https://opensea.io/assets/matic/0x2953399124f0cbb46d2cbacd8a89cf0599974963/13009963980914427219014510401169475447507375023745617614837957101987609706497/`, '_blank');" type="button" class="btn btn-outline-primary" style="overflow-anchor: none;">NFT</button>
+          <button data-v-0dbaae9e=""
+            onclick="window.open(`https://opensea.io/assets/matic/0x2953399124f0cbb46d2cbacd8a89cf0599974963/13009963980914427219014510401169475447507375023745617614837957101987609706497/`, '_blank');"
+            type="button" class="btn btn-outline-primary" style="overflow-anchor: none;">NFT</button>
         </div>
       </nav>
     </div>
@@ -240,7 +242,7 @@
                   </div>
                 </div>
                 <div data-v-4460fc7e="" class="course-info col mt-lg-4 pt-lg-5 ml-lg-4 col-lg-5">
-                  <div class="cryptokitty"></div>
+
                   <div data-v-4460fc7e="" id="zombies" class="card course-info-content text-white bg-shaded p-5"
                     style="display: none;">
 
@@ -254,6 +256,12 @@
                         <button class="levelupButton btn btn-primary" type="button">Level Up</button>
                       </div>
                     </div>
+                  </div>
+                  <div class="cryptokittyBlock text-center m-1">
+                    <div class="text-center" style="margin-left:28%;border: 1px solid;width: 36vh;height: 32vh;"><img class="cryptokitty" style="width:90%" /></div>
+                    <input type="text" class="form-control kittynum m-1" id="kn" />
+                    <button id="show-kitty" class="btn btn-success m-1">Show Kitty</button>
+                    <button id="eat-kitty" class="btn btn-warning m-1">Eat Kitty</button>
                   </div>
 
                 </div>
@@ -279,16 +287,17 @@
     const levelupButton = document.querySelector('.levelupButton');
     const cryptokitty = document.querySelector('.cryptokitty');
 
-    // $(function () {
-    //   var kittyId = 1;
-    //   let apiUrl = "https://api.cryptokitties.co/kitties/" + kittyId
-    //   $.get(apiUrl, function (data) {
-    //     let imgUrl = data.image_url
-    //     $(".cryptokitty").html(`<img style="width:30%" src="${imgUrl}">`);
 
-    //     // do something to display the image
-    //   })
-    // });
+    $("#show-kitty").click(function () {
+
+      let apiUrl = "https://api.cryptokitties.co/kitties/" + $("#kn").val()
+      $.get(apiUrl, function (data) {
+        let imgUrl = data.image_url
+        $(".cryptokitty").attr("src", imgUrl);
+
+        // do something to display the image
+      })
+    });
 
     function startApp() {
       // var cryptoKittyAddress = "0x1366dfdc2B71E658986009C96FE162036708e8da";
@@ -296,7 +305,7 @@
       // cryptoKitties = new web3.eth.Contract(cryptoKittyABI, cryptoKittyAddress);
 
       //ZombieOwnership contratc address
-      var cryptoZombiesAddress = "0xbBf6d2215479848E7fc52D42986002D9438EA02a";
+      var cryptoZombiesAddress = "0xB170fF3f9960481ecEE5D39AD346849d440a282c";
 
       cryptoZombies = new web3.eth.Contract(cryptoZombiesABI, cryptoZombiesAddress);
 
@@ -447,7 +456,7 @@
               className: 'success'
             });
           $(".level-anim").fadeOut(2500);
-          let zombieClass = `zombie-parts head-visible-${randomIntFromInterval(1,7)} shirt-visible-${randomIntFromInterval(1,6)} eye-visible-${randomIntFromInterval(1,11)}`;
+          let zombieClass = `zombie-parts head-visible-${randomIntFromInterval(1, 7)} shirt-visible-${randomIntFromInterval(1, 6)} eye-visible-${randomIntFromInterval(1, 11)}`;
           console.log("zombieClass");
           $(".zombie-parts").attr("class", zombieClass);
           // $(".head,.eye,.shirt,.mouth,.left-upper-arm,.left-forearm,.right-forearm,.left-hand,.left-feet,.right-feet,.left-leg,.right-leg,.left-thigh,.right-thigh,.torso").attr("style", "filter : hue-rotate(" + (Math.random() * 1000).toFixed(2) + "deg)");
