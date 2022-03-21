@@ -17,6 +17,8 @@ Ayush bhardwaj (885866178) - ayush@csu.fullerton.edu
 **Additional Work**
 - Updated Frontend UI
 - Add images to demo zombies in a better way.
+- Deployed to Rinkenby test network
+- added smart kitty contract backend
 
 
 
