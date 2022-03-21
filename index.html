@@ -135,7 +135,7 @@
               style="display: block; height: 100%; width: calc(100% + 17px);">
               <div data-v-4460fc7e="" data-v-64161a65="" class="zombie-parts-bin-component row"
                 materialdata="[object Object]" chaptercontent="" lessonidx="6">
-                <div data-v-4460fc7e="" class="zombie-preview ">
+                <div data-v-37829458="" class="zombie-preview ">
                   <div data-v-3614808b="" data-v-4460fc7e="" class="zombie-char">
                     <div data-v-3614808b="" class="zombie-loading zombie-parts" style="display: none;"></div>
                     <div data-v-3614808b="" class="level-anim" style="display: none;">
@@ -239,6 +239,7 @@
                   </div>
                 </div>
                 <div data-v-4460fc7e="" class="course-info col mt-lg-4 pt-lg-5 ml-lg-4 col-lg-5">
+                  <div class="cryptokitty"></div>
                   <div data-v-4460fc7e="" id="zombies" class="card course-info-content text-white bg-shaded p-5"
                     style="display: none;">
 
@@ -270,17 +271,35 @@
   <script>
 
     var cryptoZombies;
+    var cryptoKitties;
     var userAccount;
     const showZombieButton = document.querySelector('.showZombieButton');
     const createzombieButton = document.querySelector('.createzombieButton');
     const levelupButton = document.querySelector('.levelupButton');
+    const cryptokitty = document.querySelector('.cryptokitty');
+
+    // $(function () {
+    //   var kittyId = 1;
+    //   let apiUrl = "https://api.cryptokitties.co/kitties/" + kittyId
+    //   $.get(apiUrl, function (data) {
+    //     let imgUrl = data.image_url
+    //     $(".cryptokitty").html(`<img style="width:30%" src="${imgUrl}">`);
+
+    //     // do something to display the image
+    //   })
+    // });
 
     function startApp() {
+      // var cryptoKittyAddress = "0x1366dfdc2B71E658986009C96FE162036708e8da";
+
+      // cryptoKitties = new web3.eth.Contract(cryptoKittyABI, cryptoKittyAddress);
 
       //ZombieOwnership contratc address
-      var cryptoZombiesAddress = "0xF4C7550100A581540301D00761B8Bd81B8521d36";
+      var cryptoZombiesAddress = "0xbBf6d2215479848E7fc52D42986002D9438EA02a";
 
       cryptoZombies = new web3.eth.Contract(cryptoZombiesABI, cryptoZombiesAddress);
+
+
 
 
       //the following code from Lesson 6, chapter 5 is obsolete
@@ -394,14 +413,17 @@
     }
 
     function feedOnKitty(zombieId, kittyId) {
+      console.log(`hey ${zombieId} ${kittyId}`);
       $("#txStatus").text("Eating a kitty. This may take a while...");
       return cryptoZombies.methods.feedOnKitty(zombieId, kittyId)
         .send({ from: userAccount })
         .on("receipt", function (receipt) {
+          console.log("Ate a kitty and spawned a new Zombie!");
           $("#txStatus").text("Ate a kitty and spawned a new Zombie!");
           getZombiesByOwner(userAccount).then(displayZombies);
         })
         .on("error", function (error) {
+          console.log(`error ${zombieId} ${kittyId}`)
           $("#txStatus").text(error);
         });
     }
@@ -424,7 +446,10 @@
               className: 'success'
             });
           $(".level-anim").fadeOut(2500);
-          $(".head,.eye,.shirt,.mouth,.left-upper-arm,.left-forearm,.right-forearm,.left-hand,.left-feet,.right-feet,.left-leg,.right-leg,.left-thigh,.right-thigh,.torso").attr("style", "filter : hue-rotate(" + (Math.random() * 1000).toFixed(2) + "deg)");
+          let zombieClass = `zombie-parts head-visible-${randomIntFromInterval(1,7)} shirt-visible-${randomIntFromInterval(1,6)} eye-visible-${randomIntFromInterval(1,11)}`;
+          console.log("zombieClass");
+          $(".zombie-parts").attr("class", zombieClass);
+          // $(".head,.eye,.shirt,.mouth,.left-upper-arm,.left-forearm,.right-forearm,.left-hand,.left-feet,.right-feet,.left-leg,.right-leg,.left-thigh,.right-thigh,.torso").attr("style", "filter : hue-rotate(" + (Math.random() * 1000).toFixed(2) + "deg)");
           getZombiesByOwner(userAccount).then(updateLevel);
           // $("#txStatus").text("");
         })
@@ -440,6 +465,9 @@
             });
         });
     }
+    function randomIntFromInterval(min, max) { // min and max included 
+      return Math.floor(Math.random() * (max - min + 1) + min)
+    }
 
     function getZombieDetails(id) {
       return cryptoZombies.methods.zombies(id).call()
@@ -451,6 +479,9 @@
 
     function getZombiesByOwner(owner) {
       return cryptoZombies.methods.getZombiesByOwner(owner).call()
+    }
+    function setKittyContractAddress(id) {
+      return cryptoKitties.methods.setKittyContractAddress(id).call()
     }
 
     window.addEventListener('load', async () => {
@@ -516,6 +547,12 @@
     levelupButton.addEventListener('click', () => {
       getZombiesByOwner(userAccount)
         .then(levelUp);
+    });
+
+    cryptokitty.addEventListener('click', () => {
+      getZombiesByOwner(userAccount)
+        .then(setKittyContractAddress(cryptoZombiesAddress))
+        .then(feedOnKitty(1, 1));
     });
 
 
