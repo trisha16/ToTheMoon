@@ -18,7 +18,7 @@ Ayush bhardwaj (885866178) - ayush@csu.fullerton.edu
 - Updated Frontend UI
 - Add images to demo zombies in a better way.
 - Add more js code to demo other functionalities, for example, feed on kitties, transfer, etc.
-- 
+
 
 
 **Project URL**
